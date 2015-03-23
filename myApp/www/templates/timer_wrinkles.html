@@ -5,8 +5,9 @@
         {{playlist.title}}
       </ion-item>
     </ion-list-->
-      <h1 style="font-size:94px; text-align:center;">1:59</h1>
-      <timer interval="1000">{{hours}} hours, {{minutes}} minutes, {{seconds}} seconds, {{millis}} milliseconds.</timer>
+      <h1 class="timer-text">
+          <timer interval="1000" countdown="119">{{minutes}}:{{seconds}}</timer>
+      </h1>
     <div class="list">
       <div class="item range range-positive">
         <i class="icon ion-ios7-sunny-outline"></i>
