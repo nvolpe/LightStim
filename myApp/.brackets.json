@@ -1,0 +1,10 @@
+{
+    "jscodehints.detectedExclusions": [
+        "/Users/Ken/myApp/plugins/org.apache.cordova.device/src/windows8/DeviceProxy.js",
+        "/Users/Ken/myApp/plugins/org.apache.cordova.device/src/windows/DeviceProxy.js",
+        "/Users/Ken/myApp/plugins/org.apache.cordova.device/www/device.js",
+        "/Users/Ken/myApp/www/compiled/flipclock.js",
+        "/Users/Ken/myApp/www/js/controllers.js",
+        "/Users/Ken/myApp/www/flipclock.min.js"
+    ]
+}
