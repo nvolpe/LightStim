@@ -44,14 +44,24 @@ angular.module('starter.controllers', ['timer'])
         $scope.modal.show();
     };
 
-
     //temporary place for now
     console.log('Start writing code here');
-
+    var timeStarted = false;
     $scope.timerRunning = false;
 
-
-
+    $scope.startStopTimer = function () {
+        if (!timeStarted) {
+            $scope.$broadcast('timer-start');
+            $scope.timerRunning = true;
+            timeStarted = true
+        } else if ((timeStarted) && (!$scope.timerRunning)) {
+            $scope.$broadcast('timer-resume');
+            $scope.timerRunning = true;
+        } else {
+            $scope.$broadcast('timer-stop');
+            $scope.timerRunning = false;
+        }
+    };
 
 
     // Perform the login action when the user submits the login form

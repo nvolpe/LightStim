@@ -1,21 +1,29 @@
 <ion-view>
-  <ion-content>
-    <!--ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list-->
-      <h1 class="timer-text">
-          <timer interval="1000" countdown="119">{{minutes}}:{{seconds}}</timer>
-      </h1>
-    <div class="list">
-      <div class="item range range-positive">
-        <i class="icon ion-ios7-sunny-outline"></i>
-        <input type="range" name="volume" min="0" max="100" value="33">
-        <i class="icon ion-ios7-sunny"></i>
-      </div>
-    </div>
-      <button class="button button-full button-assertive" style="font-size:30px;">START</button>
+    <ion-content>
+        <!--ion-list>
+          <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
+            {{playlist.title}}
+          </ion-item>
+        </ion-list-->
+        <h1 class="timer-text">
+            <timer interval="1000" autostart="false">{{minutes}}:{{seconds}}</timer>
+        </h1>
+        <div class="list">
+            <div class="item range range-positive">
+                <i class="icon ion-ios7-sunny-outline"></i>
+                <input type="range" name="volume" min="0" max="100" value="33">
+                <i class="icon ion-ios7-sunny"></i>
+            </div>
+        </div>
+
+        <div ng-if="timerRunning === true">
+            <button ng-click="startStopTimer()" class="button button-full button-assertive" style="font-size:30px;">STOP</button>
+        </div>
+        <div ng-if="timerRunning === false">
+            <button ng-click="startStopTimer()" class="button button-full button-assertive" style="font-size:30px;">START</button>
+        </div>
+
+       
         <button ng-click="Concierge_Wrinkles()" class="button button-full button-stable" style="font-size:30px;">CONCIERGE</button>
-  </ion-content>
+    </ion-content>
 </ion-view>
