@@ -46,11 +46,11 @@ angular.module('starter.controllers', ['timer'])
     
     $scope.add = function () {
         var alarmTime = new Date();
-        alarmTime.setMinutes(alartTime.getMinutes() + 1);
+        alarmTime.setMinutes(alarmTime.getMinutes() + 1);
 
         $cordovaLocalNotification.add({
-            id: "12345",
-            data: alarmTime,
+            id: 12345,
+            date: alarmTime,
             message: "this is a message",
             title: "this is a title"
         }).then(function () {
