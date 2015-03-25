@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['timer'])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $cordovaLocalNotification) {
+.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $timeout, $cordovaLocalNotification) {
     // Form data for the login modal
     /*
     $scope.loginData = {};
@@ -43,40 +43,71 @@ angular.module('starter.controllers', ['timer'])
     $scope.Concierge_Wrinkles = function () {
         $scope.modal.show();
     };
-    
-    $scope.add = function () {
-        var alarmTime = new Date();
-        alarmTime.setMinutes(alarmTime.getMinutes() + 1);
 
-        $cordovaLocalNotification.add({
-            id: 12345,
-            date: alarmTime,
-            message: "this is a message",
-            title: "this is a title"
-        }).then(function () {
-            console.log("The notification was set");
-        });
-    }
-
+    /*
+        TODO:
+        When the User clicks START TIME, set a local notification for that exact time
+    */
 
     //temporary place for now
     console.log('Start writing code here');
     var timeStarted = false;
     $scope.timerRunning = false;
 
+    var timeAmount = 2;
+
+    var id = Math.floor(Math.random() * (10000));
+    console.log('id', id);
+
     $scope.startStopTimer = function () {
         if (!timeStarted) {
             $scope.$broadcast('timer-start');
             $scope.timerRunning = true;
             timeStarted = true
+
+            //set local notification
+            setNotification(id, timeAmount)
+
         } else if ((timeStarted) && (!$scope.timerRunning)) {
             $scope.$broadcast('timer-resume');
             $scope.timerRunning = true;
         } else {
+
             $scope.$broadcast('timer-stop');
             $scope.timerRunning = false;
+
+            //cancels local notification
+            cancelNotification(id);
         }
     };
+
+
+    function setNotification(id, timeAmount) {
+
+        var alarmTime = new Date();
+        alarmTime.setMinutes(alarmTime.getMinutes() + timeAmount);
+
+        $cordovaLocalNotification.add({
+            id: id,
+            date: alarmTime,
+            message: "Time is up!",
+            title: "LightStim"
+        }).then(function () {
+            console.log("The notification was set");
+        });
+    };
+
+
+    function cancelNotification(id) {
+        $cordovaLocalNotification.cancel(id).then(function () {
+            console.log('callback for cancellation background notification');
+        });
+    };
+
+
+
+
+
 
 
     // Perform the login action when the user submits the login form
