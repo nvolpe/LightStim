@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['timer'])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $cordovaLocalNotification) {
     // Form data for the login modal
     /*
     $scope.loginData = {};
@@ -43,6 +43,21 @@ angular.module('starter.controllers', ['timer'])
     $scope.Concierge_Wrinkles = function () {
         $scope.modal.show();
     };
+    
+    $scope.add = function () {
+        var alarmTime = new Date();
+        alarmTime.setMinutes(alartTime.getMinutes() + 1);
+
+        $cordovaLocalNotification.add({
+            id: "12345",
+            data: alarmTime,
+            message: "this is a message",
+            title: "this is a title"
+        }).then(function () {
+            console.log("The notification was set");
+        });
+    }
+
 
     //temporary place for now
     console.log('Start writing code here');
