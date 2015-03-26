@@ -45,7 +45,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
         url: "/timer_wrinkles",
         views: {
             'menuContent': {
-                templateUrl: "templates/timer_wrinkles.html"
+                templateUrl: "templates/timer_wrinkles.html",
+                controller: 'wrinklesCtrl'
             }
         }
     })
@@ -55,7 +56,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
         views: {
             'menuContent': {
                 templateUrl: "templates/timer_acne_mini.html",
-                controller: 'AppCtrl2'
+                controller: 'acneMiniCtrl'
             }
         }
     })

@@ -2,12 +2,9 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:600,400,300);
 
 
-.bg {
-    background-color: blue;
-    margin-top: 81%!important;
-}
 
-.start-btn {
+/* Wrinkles */
+.start-btn-wrinkle {
     background-color: #E84B60;
     height: 50%;
     padding: 3.5em;
@@ -30,6 +27,14 @@
     font-size: 35px;
     color: black;
 }
+
+/* Acne */
+.start-btn-acne {
+    background-color: #4169E1;
+    height: 50%;
+    padding: 3.5em;
+}
+
 
 /*
     this does some magic: not quite sure what yet, overrides the ionic css

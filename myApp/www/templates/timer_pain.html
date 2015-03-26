@@ -1,19 +1,35 @@
 <ion-view>
-  <ion-content>
-    <!--ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}">
-        {{playlist.title}}
-      </ion-item>
-    </ion-list-->
-      <h1 style="font-size:94px; text-align:center;">0:59</h1>
-    <div class="list">
-      <div class="item range range-positive">
-        <i class="icon ion-ios7-sunny-outline"></i>
-        <input type="range" name="volume" min="0" max="100" value="33">
-        <i class="icon ion-ios7-sunny"></i>
-      </div>
+    <ion-content>
+        <h1 class="timer-text">
+            <timer interval="1000" autostart="false">{{minutes}}:{{seconds}}</timer>
+        </h1>
+        <div class="row">
+            <div class="col">5:00</div>
+            <div class="col">10:00</div>
+            <div class="col">15:00</div>
+            <div class="col">30:00</div>
+            <div class="col">45:00</div>
+        </div>
+    </ion-content>
+
+    <div class="fixed-outside">
+
+        <div class="start-btn" ng-if="timerRunning === false" ng-click="startStopTimer()">
+            <p class="start-text">
+                START
+            </p>
+        </div>
+
+        <div class="start-btn" ng-if="timerRunning === true" ng-click="startStopTimer()">
+            <p class="start-text">
+                STOP
+            </p>
+        </div>
+
+        <div class="concierge-btn">
+            <p class="concierge-text">
+                CONCIERGE
+            </p>
+        </div>
     </div>
-      <button class="button button-full button-assertive" style="font-size:30px;">START</button>
-        <button ng-click="Concierge_Pain()" class="button button-full button-stable" style="font-size:30px;">CONCIERGE</button>
-  </ion-content>
 </ion-view>
