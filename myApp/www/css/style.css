@@ -7,21 +7,28 @@
     margin-top: 81%!important;
 }
 
-.test-btn-1 {
-    background-color: red;
+.start-btn {
+    background-color: #E84B60;
     height: 50%;
     padding: 3.5em;
 }
 
-.test-btn-2 {
-    background-color: blue;
+.concierge-btn {
+    background-color: #F4F4F4;
     height: 50%;
     padding: 3.5em;
 }
 
-.text-style {
+.start-text {
     text-align: center;
     font-size: 35px;
+    color: white;
+}
+
+.concierge-text {
+    text-align: center;
+    font-size: 35px;
+    color: black;
 }
 
 /*

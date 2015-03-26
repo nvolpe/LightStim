@@ -67,13 +67,8 @@ angular.module('starter.controllers', ['timer'])
 
             //set local notification
             setNotification(id, timeAmount)
-
-        } else if ((timeStarted) && (!$scope.timerRunning)) {
-            $scope.$broadcast('timer-resume');
-            $scope.timerRunning = true;
         } else {
-
-            $scope.$broadcast('timer-stop');
+            $scope.$broadcast('timer-reset');
             $scope.timerRunning = false;
 
             //cancels local notification
