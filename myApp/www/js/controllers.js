@@ -70,6 +70,7 @@ angular.module('starter.controllers', ['timer'])
         } else {
             $scope.$broadcast('timer-reset');
             $scope.timerRunning = false;
+            timeStarted = false;
 
             //cancels local notification
             cancelNotification(id);
