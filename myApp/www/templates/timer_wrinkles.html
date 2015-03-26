@@ -9,7 +9,7 @@
             <timer interval="1000" autostart="false">{{minutes}}:{{seconds}}</timer>
         </h1>
 
-        <div class="show-container">
+        <!--<div class="show-container">
             <div class="progress" id="progressBar">
                 <div class="progress-number" aria-valuenow="0" style="left: 0;"></div>
                 <div class="rounded">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
         <div class="row">
             <div class="col">2:00</div>
@@ -27,14 +27,41 @@
             <div class="col">6:00</div>
         </div>
 
-        <div ng-if="timerRunning === true">
+        <!--<div class="row bg">
+            <div class="col">1<br>2<br>3<br>4</div>
+        </div>-->
+
+        <!--<div class="superfill has-bottom">
+            your fixed div, maybe a form
+        </div>-->
+
+        <!--<div ng-if="timerRunning === true">
             <button ng-click="startStopTimer()" class="button button-full button-assertive" style="font-size:30px;">STOP</button>
         </div>
-        <div ng-if="timerRunning === false">
+        <div style="margin-top: 57%;" ng-if="timerRunning === false">
             <button ng-click="startStopTimer()" class="button button-full button-assertive" style="font-size:30px;">START</button>
-        </div>
+        </div>-->
+
+        <div class="test-btn"></div>
+            <!--<button ng-click="Concierge_Wrinkles()" class="button button-full button-stable" style="font-size:30px;">CONCIERGE</button>-->
        
-        <button ng-click="Concierge_Wrinkles()" class="button button-full button-stable" style="font-size:30px;">CONCIERGE</button>
+
+        <!--<div class="fixed-inside">
+            your fixed div, maybe a form
+        </div>-->
 
     </ion-content>
+
+    <div class="fixed-outside">
+        <div class="test-btn-1">
+            <p class="text-style">
+                START
+            </p>
+        </div>
+        <div class="test-btn-2">
+            <p class="text-style">
+                CONCIERGE
+            </p>
+        </div>
+    </div>
 </ion-view>
