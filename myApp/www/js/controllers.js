@@ -1,6 +1,6 @@
 angular.module('starter.controllers', ['timer'])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $ionicPopup, $timeout, $cordovaLocalNotification) {
+.controller('AppCtrl', function ($scope, $rootScope, $ionicModal, $ionicPopup, $timeout, $cordovaLocalNotification) {
 
     // Create the Concierge_Wrinkles modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -18,13 +18,22 @@ angular.module('starter.controllers', ['timer'])
     $scope.Concierge_Wrinkles = function () {
         $scope.modal.show();
     };
+
+
+    $scope.draggable = false;
+
+    //$rootScope.$watch('draggable', function (newValue, oldValue) {
+    //    $scope.draggable = $rootScope.draggable;
+    //});
+
+
 })
 
 
 //==============================
 // Wrinkle Controller
 //==============================
-.controller('wrinklesCtrl', function ($scope, $ionicModal, $timeout, timerFactory) {
+.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -50,6 +59,74 @@ angular.module('starter.controllers', ['timer'])
 
     //Nick V's Code
     //--------------------------------------------
+
+ 
+
+    /////////
+
+    $scope.timerRunning = false;
+    //$rootScope.draggable = false;
+
+    console.log('draggable', $rootScope.draggable);
+
+    var isStart = false;
+
+    //range slider testing
+    $('input[type="range"]').rangeslider({
+
+        // Feature detection the default is `true`.
+        // Set this to `false` if you want to use
+        // the polyfill also in Browsers which support
+        // the native <input type="range"> element.
+        polyfill: false,
+
+        // Default CSS classes
+        rangeClass: 'rangeslider',
+        fillClass: 'rangeslider__fill',
+        handleClass: 'rangeslider__handle',
+
+        // Callback function
+        onInit: function () {
+            isStart = false;
+
+            var timer = 0;
+            $('.rangeslider__fill').addClass('progress-bar');
+            $('.rangeslider__handle').addClass('wrinkle-slider-handle');
+            $('.rangeslider__fill')[0].style.width = '0px';
+
+            function timerRun() {
+                $('.progress-bar').css("width", timer + "%").attr("aria-valuenow", timer);
+
+                if (timer >= 100) {
+                    $('.progress-bar').css("width", "100%");
+                    return;
+                }
+                timer++;
+                setTimeout(function () { timerRun() }, 200);
+            }
+
+            //timerRun();
+        },
+
+        // Callback function
+        onSlide: function (position, value) {
+
+            if (isStart) {
+                $rootScope.draggable = false;
+                console.log('why is slide happening');
+                console.dir(position);
+                console.dir(value);
+            }
+            isStart = true;
+        },
+
+        // Callback function
+        onSlideEnd: function (position, value) {
+            $rootScope.draggable = true;
+            //$('input[type="range"]').val(10).change();
+            console.dir($scope.timerRunning);
+        }
+    });
 
     var timeStarted = false;
     $scope.timerRunning = false;
@@ -106,7 +183,6 @@ angular.module('starter.controllers', ['timer'])
     $scope.Concierge_Acne_Mini = function () {
         $scope.modal.show();
     };
-
 
     //Nick V's Code
     //--------------------------------------------
@@ -166,3 +242,22 @@ angular.module('starter.controllers', ['timer'])
     };
 
 })
+
+
+
+
+//.directive('preventDrag', function ($ionicGesture, $ionicSlideBoxDelegate) {
+//    return {
+//        restrict: 'A',
+//        link    : function (scope, elem) {
+//            var reportEvent = function (e) {
+//                if (e.target.tagName.toLowerCase() === 'input') {
+//                    $ionicSlideBoxDelegate.enableSlide(false);
+//                } else {
+//                    $ionicSlideBoxDelegate.enableSlide(true);
+//                }
+//            };
+//            $ionicGesture.on('touch', reportEvent, elem);
+//        }
+//    };
+//});
