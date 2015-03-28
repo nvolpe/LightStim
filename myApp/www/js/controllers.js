@@ -60,18 +60,11 @@ angular.module('starter.controllers', ['timer'])
     //Nick V's Code
     //--------------------------------------------
 
- 
-
-    /////////
-
     $scope.timerRunning = false;
     //$rootScope.draggable = false;
 
-    console.log('draggable', $rootScope.draggable);
-
+    //Initiate Range Slider
     var isStart = false;
-
-    //range slider testing
     $('input[type="range"]').rangeslider({
 
         // Feature detection the default is `true`.
@@ -89,23 +82,9 @@ angular.module('starter.controllers', ['timer'])
         onInit: function () {
             isStart = false;
 
-            var timer = 0;
             $('.rangeslider__fill').addClass('progress-bar');
             $('.rangeslider__handle').addClass('wrinkle-slider-handle');
-            $('.rangeslider__fill')[0].style.width = '0px';
-
-            function timerRun() {
-                $('.progress-bar').css("width", timer + "%").attr("aria-valuenow", timer);
-
-                if (timer >= 100) {
-                    $('.progress-bar').css("width", "100%");
-                    return;
-                }
-                timer++;
-                setTimeout(function () { timerRun() }, 200);
-            }
-
-            //timerRun();
+            $('.progress-bar').css("width", 0 + "%").attr("aria-valuenow", 0);
         },
 
         // Callback function
@@ -127,6 +106,71 @@ angular.module('starter.controllers', ['timer'])
             console.dir($scope.timerRunning);
         }
     });
+    //-------------------------------
+    //End Slider Init
+
+
+    
+    /*
+    * Start Progress Bar
+    */
+    function startProgressBar(timeAmount) {
+
+        var timer = 0;
+        var maxTime = 360;
+        var minTime = 120;
+        //var timeDifference = maxTime - minTime;
+        //timeAmount = 300 / timeDifference;
+        //whats the correct math v!
+        //percentMax = 25;
+
+        var endTime = 180;
+        var perecentMax = (endTime - minTime) / (maxTime - minTime) * 100;
+
+        var currentTime,
+            progressPercent;
+
+        console.log('perecentMax', perecentMax);
+        
+
+        function timerRun() {
+
+            currentTime = timer / 10;
+            progressPercent = (currentTime / endTime) * perecentMax;
+
+            console.log('progressPercent', progressPercent);
+
+            $('.progress-bar').css("width", progressPercent + "%").attr("aria-valuenow", progressPercent);
+
+            if (currentTime >= endTime) {
+                //$('.progress-bar').css("width", "100%");
+                //$('.progress-bar').css("width", percentMax + "%");
+                return;
+            }
+            timer++;
+            setTimeout(function () { timerRun() }, 100);
+        }
+
+        timerRun();
+    }
+
+
+    /*
+    * Stop Progress Bar
+    */
+    function stopProgressBar() {
+
+
+    }
+
+
+
+
+
+
+
+
+
 
     var timeStarted = false;
     $scope.timerRunning = false;
@@ -149,6 +193,10 @@ angular.module('starter.controllers', ['timer'])
             $scope.$broadcast('timer-start');
             $scope.timerRunning = true;
             timeStarted = true;
+
+            //start updating the progress bar
+            startProgressBar(timeAmount);
+
 
             //set local notification
             timerFactory.setNotification(id, timeAmount); //TODO pass in wrinkles
