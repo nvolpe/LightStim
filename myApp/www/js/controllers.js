@@ -33,7 +33,7 @@ angular.module('starter.controllers', ['timer'])
 //==============================
 // Wrinkle Controller
 //==============================
-.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory) {
+.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -68,6 +68,7 @@ angular.module('starter.controllers', ['timer'])
 
     $scope.time = 180;
 
+
     function formatSeconds() {
         var minutes = Math.round(($scope.time - 30) / 60);
         var remainingSeconds = $scope.time % 60;
@@ -80,6 +81,9 @@ angular.module('starter.controllers', ['timer'])
     }
 
     formatSeconds();
+
+
+    $ionicSideMenuDelegate.canDragContent(true);
 
     //$rootScope.draggable = false;
 
@@ -114,8 +118,11 @@ angular.module('starter.controllers', ['timer'])
                 //console.log('why is slide happening');
                 //console.dir(position);
                 //console.dir(value);
+                $ionicSideMenuDelegate.canDragContent(false);
+
             }
             isStart = true;
+
         },
 
         // Callback function
@@ -138,11 +145,12 @@ angular.module('starter.controllers', ['timer'])
 
             $scope.countdown = 550;
 
-            $scope.apply();
             //$timeout(function () {
             //    $scope.$broadcast('timer-start');
             //}, 0);
 
+
+            $ionicSideMenuDelegate.canDragContent(true);
 
             //$scope.$broadcast('timer-add-cd-seconds', value);
 
@@ -225,6 +233,8 @@ angular.module('starter.controllers', ['timer'])
     var minutes;
 
     var timer;
+
+  
 
 
     function runThatTimer () {
