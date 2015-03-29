@@ -68,6 +68,7 @@ var timerModule = angular.module('timer', [])
         
         $scope.$on('timer-set-countdown', function (e, countdown) {
           $scope.countdown = countdown;
+          $scope.$digest();
         });
 
         function resetTimeout() {
@@ -205,9 +206,9 @@ var timerModule = angular.module('timer', [])
           $scope.addCDSeconds = $element[0].addCDSeconds = function (extraSeconds) {
             $scope.countdown += extraSeconds;
             $scope.$digest();
-            if (!$scope.isRunning) {
-              $scope.start();
-            }
+            //if (!$scope.isRunning) {
+            //  $scope.start();
+            //}
           };
 
           $scope.$on('timer-add-cd-seconds', function (e, extraSeconds) {
@@ -221,8 +222,12 @@ var timerModule = angular.module('timer', [])
               $scope.clear();
             }
 
-            $scope.countdown = countdownSeconds;
-            $scope.millis = countdownSeconds * 1000;
+            //$scope.countdown = countdownSeconds;
+            //$scope.millis = countdownSeconds * 1000;
+
+            $scope.countdown = 300;
+            $scope.$digest();
+
             calculateTimeUnits();
           });
         } else {
