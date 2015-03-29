@@ -134,28 +134,10 @@ angular.module('starter.controllers', ['timer'])
             console.debug('position', position);
             console.debug('value', value);
 
-            //$scope.timeAmount = value;
-            //$scope.$broadcast('timer-reset');
-
-            //$scope.$broadcast('timer-add-cd-seconds', value);
-            //$scope.$broadcast('timer-set-countdown', value);
-            //$scope.$broadcast('timer-set-countdown-seconds', value);
-            //$scope.$broadcast('timer-reset');
-
-
             $scope.countdown = 550;
-
-            //$timeout(function () {
-            //    $scope.$broadcast('timer-start');
-            //}, 0);
 
 
             $ionicSideMenuDelegate.canDragContent(true);
-
-            //$scope.$broadcast('timer-add-cd-seconds', value);
-
-            //$scope.$broadcast('timer-start');
-            //$scope.$broadcast('timer-stop');
         }
     });
     //-------------------------------
@@ -248,7 +230,7 @@ angular.module('starter.controllers', ['timer'])
         }
 
         if (seconds == 0) {
-            clearInterval(mytimeout);
+            $timeout.cancel(timer);
         } else {
             seconds--;
         }
@@ -264,12 +246,6 @@ angular.module('starter.controllers', ['timer'])
     };
 
 
-
-
-
-
-
-
     $scope.startStopTimer = function () {
 
         if (!timeStarted) {
@@ -282,21 +258,15 @@ angular.module('starter.controllers', ['timer'])
             // cancel approach is actually working.
             timer.then(
                 function () {
-
                     console.log("Timer resolved!", Date.now());
-
                 },
                 function () {
-
                     console.log("Timer rejected!", Date.now());
 
                 }
             );
 
-            //var mytimeout = $timeout($scope.onTimeout, 1000);
-
             timeStarted = true;
-
 
             //    //start updating the progress bar
             //    startProgressBar(timeAmount);
@@ -306,7 +276,6 @@ angular.module('starter.controllers', ['timer'])
 
         } else {
 
-            //clearInterval(mytimeout);
 
             $timeout.cancel(timer);
 
