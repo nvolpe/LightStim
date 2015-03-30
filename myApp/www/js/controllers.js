@@ -276,6 +276,7 @@ angular.module('starter.controllers', ['timer'])
             if (seconds == 0) {
                 $timeout.cancel(countdownTimer);
                 $scope.isStarted = false;
+                return;
             } else {
                 seconds--;
             }
