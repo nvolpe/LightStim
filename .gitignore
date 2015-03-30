@@ -1,2 +1,10 @@
 
 myApp/hooks/after_prepare/010_add_platform_class.js
+
+myApp/hooks/before_platform_add/init_directories.js
+
+myApp/hooks/after_prepare/020_remove_sass_from_platforms.js
+
+myApp/hooks/before_platform_add/init_directories.js
+
+myApp/.DS_Store
