@@ -64,7 +64,13 @@ angular.module('starter.controllers', ['timer'])
     $scope.timerRunning = false;
     $scope.tester = 'test';
 
-    function formatSeconds() {
+    function formatSeconds(isReset) {
+
+        $scope.previousAmount = $scope.timeAmount;
+        if (isReset) {
+            $scope.timeAmount = $scope.previousAmount;
+        } 
+
         var minutes = Math.round(($scope.timeAmount - 30) / 60);
         var remainingSeconds = $scope.timeAmount % 60;
         if (remainingSeconds < 10) {
@@ -81,23 +87,33 @@ angular.module('starter.controllers', ['timer'])
 
         //find the breaks
         if (val <= 150) {
-            setSlider(120);
+            setSlider(120, 2);
         } else if (val > 150 && val <= 210) {
-            setSlider(180);
+            setSlider(180, 3);
         } else if (val > 210 && val <= 270) {
-            setSlider(240);
+            setSlider(240, 4);
         } else if (val > 270 && val <= 330) {
-            setSlider(300);
+            setSlider(300, 5);
         } else if (val > 330 && val <= 390) {
-            setSlider(360);
+            setSlider(360, 6);
         }
     }
 
-    function setSlider(val) {
-        $('input[type="range"]').val(val).change();
+    function setSlider(seconds, minutes) {
+        $('input[type="range"]').val(seconds).change();
+        $('.progress-bar').css("width", 0 + "%").attr("aria-valuenow", 0);
 
-        $scope.timeAmount = val;
-        formatSeconds(val);
+        $scope.timeAmount = seconds;
+        formatSeconds();
+        $scope.alarmmMinutes = minutes;
+    }
+
+    function resetTimer() {
+        if (countdownTimer) {
+            $scope.timerRunning = false;
+            stopProgressBar();
+            $timeout.cancel(countdownTimer);
+        } 
     }
 
     formatSeconds();
@@ -135,7 +151,6 @@ angular.module('starter.controllers', ['timer'])
         onSlide: function (position, value) {
             if (isStart) {
                 $ionicSideMenuDelegate.canDragContent(false);
-
             }
             isStart = true;
         },
@@ -147,7 +162,12 @@ angular.module('starter.controllers', ['timer'])
             console.debug('position', position);
             console.debug('value', value);
 
+            $scope.isStarted = false;
+            resetTimer(true);
+            formatSeconds(true);
+
             findSliderInterval(value);
+
         }
     });
     //-------------------------------
@@ -159,14 +179,14 @@ angular.module('starter.controllers', ['timer'])
 
     //define variable for css timer function so we can cancel it later
     var progressTimer;
-    function startProgressBar(timeAmount) {
+    function startProgressBar() {
 
         //TODO, make these dynamic
         var timer = 0;
         var maxTime = 360;
         var minTime = 120;
 
-        var endTime = 180;
+        var endTime = $scope.timeAmount;
         var perecentMax = (endTime - minTime) / (maxTime - minTime) * 100;
 
         var currentTime,
@@ -195,11 +215,15 @@ angular.module('starter.controllers', ['timer'])
     * Stop Progress Bar
     */
     function stopProgressBar() {
-        //clear the css timer from updating
-        clearTimeout(progressTimer);
 
-        //reset the progress bar back to 0 percent
-        $('.progress-bar').css("width", "0%").attr("aria-valuenow", 0);
+        if (progressTimer) {
+            //clear the css timer from updating
+            clearTimeout(progressTimer);
+
+            //reset the progress bar back to 0 percent
+            $('.progress-bar').css("width", "0%").attr("aria-valuenow", 0);
+        }
+
     }
 
     var timeStarted = false;
@@ -209,45 +233,57 @@ angular.module('starter.controllers', ['timer'])
         When the User clicks START TIME, set a local notification for that exact time
     */
 
-    var timeAmount = 2;
+    //var timeAmount = 2;
 
     var id = Math.floor(Math.random() * (10000));
     console.log('id', id);
 
     var counter = 180;
 
-    var seconds = 180;
+
     var minutes;
 
     var countdownTimer;
 
 
-
+    var previousSeconds;
+    $scope.isStarted = false;
 
     function startCountdown() {
 
-        counter--;
-
-        minutes = Math.round((seconds - 30) / 60);
-        var remainingSeconds = seconds % 60;
-        if (remainingSeconds < 10) {
-            remainingSeconds = "0" + remainingSeconds;
+        if (!$scope.isStarted) {
+            seconds = $scope.timeAmount;
+            $scope.isStarted = true;
         }
 
-        if (seconds == 0) {
-            $timeout.cancel(countdownTimer);
-        } else {
-            seconds--;
-        }
+        //var seconds = $scope.timeAmount;
+        if ($scope.isStarted == true) {
+            counter--;
+    
+            minutes = Math.round((seconds - 30) / 60);
+            var remainingSeconds = seconds % 60;
+            if (remainingSeconds < 10) {
+                remainingSeconds = "0" + remainingSeconds;
+            }
 
-        console.debug('minutes', minutes);
-        console.debug('remainingSeconds', remainingSeconds);
+            if (seconds == 0) {
+                $timeout.cancel(countdownTimer);
+                $scope.isStarted = false;
+            } else {
+                seconds--;
+            }
 
-        $scope.minutes = minutes;
-        $scope.seconds = remainingSeconds;
+            console.debug('minutes', minutes);
+            console.debug('remainingSeconds', remainingSeconds);
 
-        countdownTimer = $timeout(startCountdown, 1000);
-    };
+            $scope.minutes = minutes;
+            $scope.seconds = remainingSeconds;
+
+            countdownTimer = $timeout(startCountdown, 1000);
+        } 
+    }
+
+
 
 
     /*
@@ -258,6 +294,7 @@ angular.module('starter.controllers', ['timer'])
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
+
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
@@ -275,20 +312,16 @@ angular.module('starter.controllers', ['timer'])
             $scope.timerRunning = true;
 
             //    //start updating the progress bar
-            //    startProgressBar(timeAmount);
+            startProgressBar();
 
             //    //set local notification
-            //    timerFactory.setNotification(id, timeAmount); //TODO pass in wrinkles
+            timerFactory.setNotification(id, $scope.alarmmMinutes); //TODO pass in wrinkles
 
         } else {
-
-            $scope.timerRunning = false;
-            $timeout.cancel(countdownTimer);
-
-            //stopProgressBar(timeAmount);
-
+            resetTimer();
+            formatSeconds(true);
             //cancels local notification
-            //timerFactory.cancelNotification(id);
+            timerFactory.cancelNotification(id);
         }
     };
 })
