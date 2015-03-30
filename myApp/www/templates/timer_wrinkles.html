@@ -1,11 +1,9 @@
 <ion-view>
-    <ion-content scroll="false">
+    <ion-content>
         <h1 class="timer-text">
             {{minutes}}:{{seconds}}
         </h1>
-
-        <input type="range" min="120" max="360" step="10" value="180">
-
+        <input type="range" min="120" max="360" step="1" value="180">
         <div class="row">
             <div class="col">2:00</div>
             <div class="col">3:00</div>
@@ -13,10 +11,10 @@
             <div class="col">5:00</div>
             <div class="col">6:00</div>
         </div>
+
     </ion-content>
 
     <div class="fixed-outside">
-
         <div class="start-btn-wrinkle" ng-if="timerRunning === false" ng-click="startStopTimer()">
             <p class="start-text">
                 START
@@ -28,11 +26,11 @@
                 STOP
             </p>
         </div>
-
-        <div class="concierge-btn" >
+        <div class="concierge-btn">
             <p class="concierge-text">
                 CONCIERGE
             </p>
         </div>
     </div>
+
 </ion-view>

@@ -60,32 +60,52 @@ angular.module('starter.controllers', ['timer'])
     //Nick V's Code
     //--------------------------------------------
 
-    $scope.timerRunning = false;
     $scope.timeAmount = 180; // default the timer to 3 minutes
-
-
-    $scope.countdown = 180;
-
-    $scope.time = 180;
-
+    $scope.timerRunning = false;
+    $scope.tester = 'test';
 
     function formatSeconds() {
-        var minutes = Math.round(($scope.time - 30) / 60);
-        var remainingSeconds = $scope.time % 60;
+        var minutes = Math.round(($scope.timeAmount - 30) / 60);
+        var remainingSeconds = $scope.timeAmount % 60;
         if (remainingSeconds < 10) {
             remainingSeconds = "0" + remainingSeconds;
         }
 
         $scope.minutes = minutes;
         $scope.seconds = remainingSeconds;
+        $scope.$apply(); //throws an error that $scope.$digest() is already occuring
+    }
+
+
+    function findSliderInterval(val) {
+
+        //find the breaks
+        if (val <= 150) {
+            setSlider(120);
+        } else if (val > 150 && val <= 210) {
+            setSlider(180);
+        } else if (val > 210 && val <= 270) {
+            setSlider(240);
+        } else if (val > 270 && val <= 330) {
+            setSlider(300);
+        } else if (val > 330 && val <= 390) {
+            setSlider(360);
+        }
+    }
+
+    function setSlider(val) {
+        $('input[type="range"]').val(val).change();
+
+        $scope.timeAmount = val;
+        formatSeconds(val);
     }
 
     formatSeconds();
-
-
     $ionicSideMenuDelegate.canDragContent(true);
 
-    //$rootScope.draggable = false;
+    /*
+        BUG: Jquery is breaking the diretives! This shouldnt be written in JQuery anyways!!!
+    */
 
     //Initiate Range Slider
     var isStart = false;
@@ -114,30 +134,20 @@ angular.module('starter.controllers', ['timer'])
         // Callback function
         onSlide: function (position, value) {
             if (isStart) {
-                $rootScope.draggable = false;
-                //console.log('why is slide happening');
-                //console.dir(position);
-                //console.dir(value);
                 $ionicSideMenuDelegate.canDragContent(false);
 
             }
             isStart = true;
-
         },
 
         // Callback function
         onSlideEnd: function (position, value) {
-            $rootScope.draggable = true;
-            //$('input[type="range"]').val(10).change();
-            console.dir($scope.timerRunning);
+            $ionicSideMenuDelegate.canDragContent(true);
 
             console.debug('position', position);
             console.debug('value', value);
 
-            $scope.countdown = 550;
-
-
-            $ionicSideMenuDelegate.canDragContent(true);
+            findSliderInterval(value);
         }
     });
     //-------------------------------
@@ -149,7 +159,6 @@ angular.module('starter.controllers', ['timer'])
 
     //define variable for css timer function so we can cancel it later
     var progressTimer;
-
     function startProgressBar(timeAmount) {
 
         //TODO, make these dynamic
@@ -194,15 +203,11 @@ angular.module('starter.controllers', ['timer'])
     }
 
     var timeStarted = false;
-    $scope.timerRunning = false;
 
     /*
         TODO:
         When the User clicks START TIME, set a local notification for that exact time
     */
-
-    var timeStarted = false;
-    $scope.timerRunning = false;
 
     var timeAmount = 2;
 
@@ -214,12 +219,12 @@ angular.module('starter.controllers', ['timer'])
     var seconds = 180;
     var minutes;
 
-    var timer;
-
-  
+    var countdownTimer;
 
 
-    function runThatTimer () {
+
+
+    function startCountdown() {
 
         counter--;
 
@@ -230,7 +235,7 @@ angular.module('starter.controllers', ['timer'])
         }
 
         if (seconds == 0) {
-            $timeout.cancel(timer);
+            $timeout.cancel(countdownTimer);
         } else {
             seconds--;
         }
@@ -240,23 +245,24 @@ angular.module('starter.controllers', ['timer'])
 
         $scope.minutes = minutes;
         $scope.seconds = remainingSeconds;
-    
 
-        timer = $timeout(runThatTimer, 1000);
+        countdownTimer = $timeout(startCountdown, 1000);
     };
 
 
+    /*
+        ngclick events
+    */
     $scope.startStopTimer = function () {
 
-        if (!timeStarted) {
+        if (!$scope.timerRunning) {
 
-            timer = $timeout(runThatTimer, 1000);
-
+            countdownTimer = $timeout(startCountdown, 1000);
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
             // cancel approach is actually working.
-            timer.then(
+            countdownTimer.then(
                 function () {
                     console.log("Timer resolved!", Date.now());
                 },
@@ -266,7 +272,7 @@ angular.module('starter.controllers', ['timer'])
                 }
             );
 
-            timeStarted = true;
+            $scope.timerRunning = true;
 
             //    //start updating the progress bar
             //    startProgressBar(timeAmount);
@@ -276,8 +282,8 @@ angular.module('starter.controllers', ['timer'])
 
         } else {
 
-
-            $timeout.cancel(timer);
+            $scope.timerRunning = false;
+            $timeout.cancel(countdownTimer);
 
             //stopProgressBar(timeAmount);
 
