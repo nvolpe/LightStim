@@ -28,24 +28,43 @@
 
         console.log('cancel notification');
 
-        $cordovaLocalNotification.cancel(id).then(function () {
-            console.log('callback for cancellation background notification');
-        });
+        checkIfScheduled(id);
     };
 
     //TODO: Make this smart, we could store a hash of types with numbers,
     //then we would always be able to stop, start, pause - and update the location notification id
     //we would have to cancel / reset, but could be sexy
     function createId(type) {
-
+        console.log('Not Implemented');
     };
+
+
+    function checkIfScheduled() {
+
+        $cordovaLocalNotification.isScheduled().then(function (isScheduled) {
+            console.log(isScheduled);
+          
+            if (isScheduled) {
+
+                $ionicPopup.alert({
+                    title: 'deleted',
+                    template: 'trying to delete'
+                });
+
+                $cordovaLocalNotification.cancel(id).then(function () {
+                    console.log('callback for cancellation background notification');
+                });
+            };
+        });
+    };
+
 
     //==============================
     // Public Api
     //==============================
     return {
         setNotification: _setNotification,
-        cancelNotification: _cancelNotification,
+        cancelNotification: _cancelNotification
     };
 
 

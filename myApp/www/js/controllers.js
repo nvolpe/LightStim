@@ -63,6 +63,8 @@ angular.module('starter.controllers', ['timer'])
     $scope.timeAmount = 180; // default the timer to 3 minutes
     $scope.timerRunning = false;
     $scope.tester = 'test';
+    $scope.alarmmMinutes = 3;
+    var id;
 
     function formatSeconds(isReset) {
 
@@ -109,14 +111,24 @@ angular.module('starter.controllers', ['timer'])
     }
 
     function resetTimer() {
-        if (countdownTimer) {
+
+        if ($scope.isStarted) {
+            formatSeconds(true);
             $scope.timerRunning = false;
             stopProgressBar();
             $timeout.cancel(countdownTimer);
-        } 
+            timerFactory.cancelNotification(id);
+            console.log('cancellllllllled');
+        }
     }
 
+    function createId() {
+        id = Math.floor(Math.random() * (10000));
+    }
+
+
     formatSeconds();
+    createId();
     $ionicSideMenuDelegate.canDragContent(true);
 
     /*
@@ -162,11 +174,11 @@ angular.module('starter.controllers', ['timer'])
             console.debug('position', position);
             console.debug('value', value);
 
-            $scope.isStarted = false;
             resetTimer(true);
             formatSeconds(true);
 
             findSliderInterval(value);
+            $scope.isStarted = false;
 
         }
     });
@@ -235,14 +247,10 @@ angular.module('starter.controllers', ['timer'])
 
     //var timeAmount = 2;
 
-    var id = Math.floor(Math.random() * (10000));
-    console.log('id', id);
 
-    var counter = 180;
-
+  
 
     var minutes;
-
     var countdownTimer;
 
 
@@ -258,7 +266,6 @@ angular.module('starter.controllers', ['timer'])
 
         //var seconds = $scope.timeAmount;
         if ($scope.isStarted == true) {
-            counter--;
     
             minutes = Math.round((seconds - 30) / 60);
             var remainingSeconds = seconds % 60;
@@ -311,13 +318,14 @@ angular.module('starter.controllers', ['timer'])
 
             $scope.timerRunning = true;
 
-            //    //start updating the progress bar
+            //start updating the progress bar
             startProgressBar();
 
-            //    //set local notification
+            //set local notification
             timerFactory.setNotification(id, $scope.alarmmMinutes); //TODO pass in wrinkles
 
         } else {
+
             resetTimer();
             formatSeconds(true);
             //cancels local notification
