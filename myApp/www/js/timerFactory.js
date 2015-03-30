@@ -28,7 +28,11 @@
 
         console.log('cancel notification');
 
-        checkIfScheduled(id);
+        $cordovaLocalNotification.cancel(id).then(function () {
+            console.log('callback for cancellation background notification');
+        });
+
+        //checkIfScheduled(id);
     };
 
     //TODO: Make this smart, we could store a hash of types with numbers,
