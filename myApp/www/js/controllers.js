@@ -273,6 +273,13 @@ angular.module('starter.controllers', ['timer'])
                 remainingSeconds = "0" + remainingSeconds;
             }
 
+
+            console.debug('minutes', minutes);
+            console.debug('remainingSeconds', remainingSeconds);
+
+            $scope.minutes = minutes;
+            $scope.seconds = remainingSeconds;
+
             if (seconds == 0) {
                 $timeout.cancel(countdownTimer);
                 $scope.isStarted = false;
@@ -281,11 +288,6 @@ angular.module('starter.controllers', ['timer'])
                 seconds--;
             }
 
-            console.debug('minutes', minutes);
-            console.debug('remainingSeconds', remainingSeconds);
-
-            $scope.minutes = minutes;
-            $scope.seconds = remainingSeconds;
 
             countdownTimer = $timeout(startCountdown, 1000);
         } 
