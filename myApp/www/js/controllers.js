@@ -19,11 +19,14 @@ angular.module('starter.controllers', ['timer'])
         $scope.modal.show();
     };
 
+
     $scope.draggable = false;
 
     //$rootScope.$watch('draggable', function (newValue, oldValue) {
     //    $scope.draggable = $rootScope.draggable;
     //});
+
+
 })
 
 
@@ -40,15 +43,19 @@ angular.module('starter.controllers', ['timer'])
     });
 
     // Triggered in the Concierge_Acne_Mini modal to close it
-    $scope.closeConcierge = function () {
+    $scope.closeConcierge_Acne_Mini = function () {
         $scope.modal.hide();
     };
 
-    // Open the modal
-    $scope.showConcierge = function () {
+    // Open the Concierge_Acne_Mini modal
+    $scope.Concierge_Acne_Mini = function () {
         $scope.modal.show();
     };
 
+
+    $scope.startStopTimer = function () {
+        console.log('wrinkle controller');
+    };
 
     //Nick V's Code
     //--------------------------------------------
@@ -57,14 +64,14 @@ angular.module('starter.controllers', ['timer'])
     $scope.timerRunning = false;
     $scope.tester = 'test';
     $scope.alarmmMinutes = 3;
-    $scope.selectedTime = { "color": "red" };
-
     var id;
+
     function formatSeconds(isReset) {
 
-        //if (isReset) {
-        //    $scope.timeAmount = 180;
-        //} 
+        $scope.previousAmount = $scope.timeAmount;
+        if (isReset) {
+            $scope.timeAmount = $scope.previousAmount;
+        } 
 
         var minutes = Math.round(($scope.timeAmount - 30) / 60);
         var remainingSeconds = $scope.timeAmount % 60;
@@ -82,49 +89,35 @@ angular.module('starter.controllers', ['timer'])
 
         //find the breaks
         if (val <= 150) {
-            setSlider(120, 2, 1);
+            setSlider(120, 2);
         } else if (val > 150 && val <= 210) {
-            setSlider(180, 3, 2);
+            setSlider(180, 3);
         } else if (val > 210 && val <= 270) {
-            setSlider(240, 4, 3);
+            setSlider(240, 4);
         } else if (val > 270 && val <= 330) {
-            setSlider(300, 5, 4);
+            setSlider(300, 5);
         } else if (val > 330 && val <= 390) {
-            setSlider(360, 6, 5);
+            setSlider(360, 6);
         }
     }
 
-    function setSlider(seconds, minutes, position) {
-
-        //if (adjust) {
-        //    adjustedSeconds = seconds + 18;
-        //} else {
-        //    adjustedSeconds = seconds;
-        //}
-
+    function setSlider(seconds, minutes) {
         $('input[type="range"]').val(seconds).change();
         $('.progress-bar').css("width", 0 + "%").attr("aria-valuenow", 0);
-        $('.col').removeClass('selectedTime');
-        $('#time-row :nth-child(' + position + ')').addClass('selectedTime');
 
         $scope.timeAmount = seconds;
         formatSeconds();
         $scope.alarmmMinutes = minutes;
     }
 
-    function resetTimer(time) {
-
-        if (time) {
-            $scope.timeAmount = time;
-        }
-
+    function resetTimer() {
 
         if ($scope.isStarted) {
             formatSeconds(true);
             $scope.timerRunning = false;
             stopProgressBar();
             $timeout.cancel(countdownTimer);
-            //timerFactory.cancelNotification(id);
+            timerFactory.cancelNotification(id);
             console.log('cancellllllllled');
         }
     }
@@ -176,18 +169,17 @@ angular.module('starter.controllers', ['timer'])
 
         // Callback function
         onSlideEnd: function (position, value) {
+            $ionicSideMenuDelegate.canDragContent(true);
 
-            console.log('position', position)
-            console.log('value', value)
+            console.debug('position', position);
+            console.debug('value', value);
 
-       
-            findSliderInterval(value);
-            resetTimer();
-            $scope.isStarted = false;
+            resetTimer(true);
             formatSeconds(true);
 
-            //wow, moving this to the end of the method works, at the start of the method it doesnt work!
-            $ionicSideMenuDelegate.canDragContent(true);
+            findSliderInterval(value);
+            $scope.isStarted = false;
+
         }
     });
     //-------------------------------
@@ -230,6 +222,7 @@ angular.module('starter.controllers', ['timer'])
         timerRun();
     }
 
+
     /*
     * Stop Progress Bar
     */
@@ -242,6 +235,7 @@ angular.module('starter.controllers', ['timer'])
             //reset the progress bar back to 0 percent
             $('.progress-bar').css("width", "0%").attr("aria-valuenow", 0);
         }
+
     }
 
     var timeStarted = false;
@@ -259,10 +253,9 @@ angular.module('starter.controllers', ['timer'])
     var minutes;
     var countdownTimer;
 
+
     var previousSeconds;
     $scope.isStarted = false;
-
-
 
     function startCountdown() {
 
@@ -300,6 +293,9 @@ angular.module('starter.controllers', ['timer'])
         } 
     }
 
+
+
+
     /*
         ngclick events
     */
@@ -308,6 +304,7 @@ angular.module('starter.controllers', ['timer'])
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
+
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
@@ -333,7 +330,6 @@ angular.module('starter.controllers', ['timer'])
         } else {
 
             resetTimer();
-            $scope.isStarted = false;
             formatSeconds(true);
             //cancels local notification
             timerFactory.cancelNotification(id);
@@ -381,9 +377,6 @@ angular.module('starter.controllers', ['timer'])
     console.log('id', id);
 
     $scope.startStopTimer = function () {
-
-        $scope.test = { color: "red" };
-
         if (!timeStarted) {
             $scope.$broadcast('timer-start');
             $scope.timerRunning = true;
