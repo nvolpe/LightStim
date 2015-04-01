@@ -1,11 +1,11 @@
 <ion-view>
-    <ion-content>
+    <ion-content has-bouncing="false">
         <h1 class="timer-text">
             {{minutes}}:{{seconds}}
         </h1>
         <input type="range" min="120" max="360" step="1" value="180">
-        <div class="row">
-            <div class="col">2:00</div>
+        <div id="time-row" style="margin-left: 5%" class="row">
+            <div class="col" ng-style="selectedTime">2:00</div>
             <div class="col">3:00</div>
             <div class="col">4:00</div>
             <div class="col">5:00</div>
@@ -26,7 +26,7 @@
                 STOP
             </p>
         </div>
-        <div class="concierge-btn">
+        <div class="concierge-btn" ng-click="showConcierge()">
             <p class="concierge-text">
                 CONCIERGE
             </p>
