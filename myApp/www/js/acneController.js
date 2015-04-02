@@ -1,4 +1,4 @@
-﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate) {
+﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $cordovaMedia, timerFactory, $ionicSideMenuDelegate) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -254,6 +254,10 @@
         }
     }
 
+    function mediaStatusCallback() {
+        console.log('Media play callback');
+    }
+
     /*
         ngclick events
     */
@@ -262,6 +266,9 @@
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
+
+            var media = new Media('www/mp3/timer_start.mp3', null, null, mediaStatusCallback);
+            $cordovaMedia.play(media);
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
