@@ -1,17 +1,18 @@
 <ion-view>
-    <ion-content>
+    <ion-content has-bouncing="false">
         <h1 class="timer-text">
-            3:00
+            {{minutes}}:{{seconds}}
         </h1>
-        <div class="row">
-            <div class="col" ng-style="test">5:00</div>
+        <input type="range" min="300" max="900" step="1" value="375">
+        <div id="time-row" style="margin-left: 10%" class="row">
+            <div class="col">5:00</div>
             <div class="col">10:00</div>
             <div class="col">15:00</div>
         </div>
+
     </ion-content>
 
     <div class="fixed-outside">
-
         <div class="start-btn-acne" ng-if="timerRunning === false" ng-click="startStopTimer()">
             <p class="start-text">
                 START
@@ -23,11 +24,11 @@
                 STOP
             </p>
         </div>
-
-        <div class="concierge-btn">
+        <div class="concierge-btn" ng-click="showConcierge()">
             <p class="concierge-text">
                 CONCIERGE
             </p>
         </div>
     </div>
+
 </ion-view>

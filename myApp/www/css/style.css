@@ -30,8 +30,16 @@
     border: #E84B60 13px solid;
 }
 
-.selectedTime {
+.acne-slider-handle {
+    border: #1870EA 13px solid;
+}
+
+.selectedTime-wrinkle {
     color: #E84B60;
+}
+
+.selectedTime-acne {
+    color: #1870EA;
 }
 
 /* Acne */
@@ -93,11 +101,21 @@
 }
 
 
-.progress-bar {
+.progress-bar-wrinkle {
     position: relative;
     height: 100%;
     background-image: linear-gradient(135deg, #E84B60, #EA796C, #EB8864);
     transition: width .2s linear;
   }
+
+
+.progress-bar-acne {
+    position: relative;
+    height: 100%;
+    background-image: linear-gradient(135deg, #1870EA, #3BA7EC, #3BCAEC);
+    transition: width .2s linear;
+  }
+
+
 
 
