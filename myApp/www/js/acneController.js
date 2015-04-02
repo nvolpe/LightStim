@@ -267,7 +267,7 @@
 
             countdownTimer = $timeout(startCountdown, 1000);
 
-            var media = new Media('www/mp3/timer_start.mp3', null, null, mediaStatusCallback);
+            var media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', null, null, mediaStatusCallback);
             $cordovaMedia.play(media);
 
             // Let's bind to the resolve/reject handlers of
