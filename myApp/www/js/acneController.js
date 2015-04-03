@@ -1,4 +1,4 @@
-﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, $cordovaMedia, timerFactory, $ionicSideMenuDelegate) {
+﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -234,7 +234,6 @@
                 remainingSeconds = "0" + remainingSeconds;
             }
 
-
             console.debug('minutes', minutes);
             console.debug('remainingSeconds', remainingSeconds);
 
@@ -248,7 +247,6 @@
             } else {
                 seconds--;
             }
-
 
             countdownTimer = $timeout(startCountdown, 1000);
         }
