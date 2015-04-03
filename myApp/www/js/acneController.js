@@ -254,8 +254,8 @@
         }
     }
 
-    var snd = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
-    snd.play();
+    // var snd = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
+    // snd.play();
     /*
         ngclick events
     */
@@ -264,7 +264,7 @@
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
-            snd.play();
+            // snd.play();
 
             // $cordovaMedia.play($scope.thisMedia);
             //var angSound = $cordovaMedia.newMedia('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3');
