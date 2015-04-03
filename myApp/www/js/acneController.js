@@ -254,10 +254,8 @@
         }
     }
 
-    function mediaStatusCallback() {
-        console.log('Media play callback');
-    }
-
+    var snd = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
+    snd.play();
     /*
         ngclick events
     */
@@ -266,9 +264,24 @@
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
+            snd.play();
 
-            var media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', null, null, mediaStatusCallback);
-            $cordovaMedia.play(media);
+            // $cordovaMedia.play($scope.thisMedia);
+            //var angSound = $cordovaMedia.newMedia('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3');
+            //$cordovaMedia.play(angSound).then(
+            //    function (succ) {
+            //        console.log('yay! ' + succ);
+            //        $scope.soundDisabled = false;
+            //    },
+            //    function (err) {
+            //        console.log('boo! ' + err);
+            //        $scope.soundDisabled = false;
+            //    }
+            //)
+
+            //var my_media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', onSuccess, onError);
+            ////var media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', null, null, mediaStatusCallback);
+            //$cordovaMedia.play(my_media);
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
