@@ -26,7 +26,6 @@
 
     $ionicPlatform.on('resume', function() {
         // do something update your interval
-        $scope.timeAmount = '';
         var resumeTime = new Date();
         var differenceInSeconds = (onPauseTime - resumeTime)/1000;
 
