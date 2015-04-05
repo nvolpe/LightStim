@@ -233,7 +233,7 @@
     $scope.isStarted = false;
 
 
-    timerFactory.cancelAllNotifications();
+    // timerFactory.cancelAllNotifications();
 
 
     function startCountdown() {

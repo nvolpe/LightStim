@@ -13,25 +13,25 @@ angular.module('starter')
 
         console.log('set notification');
 
+        $cordovaLocalNotification.add({
+            id: id,
+            date: alarmTime,
+            message: "Version 4",
+            title: "LightStim",
+            sound: 'file://mp3/interval.mp3'
+        }).then(function () {
+            console.log("The notification was set");
+        });
+
         // $cordovaLocalNotification.add({
         //     id: id,
         //     date: alarmTime,
-        //     message: "Version 2",
+        //     message: "Version 3",
         //     title: "LightStim",
         //     every: "minute"
         // }).then(function () {
         //     console.log("The notification was set");
         // });
-
-        $cordovaLocalNotification.add({
-            id: id,
-            date: new Date(new Date().getTime() + 120000),
-            message: "Version 2",
-            title: "LightStim",
-            every: "minute"
-        }).then(function () {
-            console.log("The notification was set");
-        });
     };
 
     function _cancelNotification(id) {
