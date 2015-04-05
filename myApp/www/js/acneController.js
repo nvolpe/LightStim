@@ -213,10 +213,14 @@
 
     var timeStarted = false;
 
-    // var today = new Date();
-    // console.log('today ', today )
-    // var testTime = new Date(new Date().getTime() + 10*10000)
-    // console.log('next time is: ', testTime )
+    var today = new Date();
+    console.log('today ', today );
+
+    var testTime = new Date(new Date().getTime() + 120000);
+    console.log('next time is: ', testTime);
+
+
+
 
     /*
         TODO:

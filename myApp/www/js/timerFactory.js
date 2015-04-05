@@ -13,11 +13,22 @@ angular.module('starter')
 
         console.log('set notification');
 
+        // $cordovaLocalNotification.add({
+        //     id: id,
+        //     date: alarmTime,
+        //     message: "Version 2",
+        //     title: "LightStim",
+        //     every: "minute"
+        // }).then(function () {
+        //     console.log("The notification was set");
+        // });
+
         $cordovaLocalNotification.add({
             id: id,
-            date: alarmTime,
-            message: "Version 1",
-            title: "LightStim"
+            date: new Date(new Date().getTime() + 120000),
+            message: "Version 2",
+            title: "LightStim",
+            every: "minute"
         }).then(function () {
             console.log("The notification was set");
         });
