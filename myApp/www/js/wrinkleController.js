@@ -230,8 +230,6 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
     var previousSeconds;
     $scope.isStarted = false;
 
-
-
     function startCountdown() {
 
         if (!$scope.isStarted) {

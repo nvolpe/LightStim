@@ -1,4 +1,4 @@
-﻿angular.module('starter')
+angular.module('starter')
 
 .factory('timerFactory', function ($log, $cordovaLocalNotification, $ionicPopup) {
 
@@ -16,17 +16,14 @@
         $cordovaLocalNotification.add({
             id: id,
             date: alarmTime,
-            message: "Time is up!",
+            message: "Version 1",
             title: "LightStim"
         }).then(function () {
             console.log("The notification was set");
         });
     };
 
-
     function _cancelNotification(id) {
-
-        console.log('cancel notification');
 
         $cordovaLocalNotification.cancel(id).then(function () {
             console.log('callback for cancellation background notification');
@@ -34,6 +31,20 @@
 
         //checkIfScheduled(id);
     };
+
+    function _cancelAllNotifications() {
+
+        $cordovaLocalNotification.cancelAll().then(function () {
+          console.log('callback for canceling all background notifications');
+
+          var alertPopup = $ionicPopup.alert({
+             title: 'All Cancelled',
+             template: 'All notifcations were cancelled'
+           });
+
+        });
+    };
+
 
     //TODO: Make this smart, we could store a hash of types with numbers,
     //then we would always be able to stop, start, pause - and update the location notification id
@@ -68,8 +79,7 @@
     //==============================
     return {
         setNotification: _setNotification,
-        cancelNotification: _cancelNotification
+        cancelNotification: _cancelNotification,
+        cancelAllNotifications: _cancelAllNotifications
     };
-
-
 });

@@ -25,6 +25,8 @@
     $scope.tester = 'test';
     $scope.alarmmMinutes = 5;
 
+    var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
+
     var id;
     function formatSeconds(isReset) {
 
@@ -42,7 +44,6 @@
         $scope.seconds = remainingSeconds;
         $scope.$apply(); //throws an error that $scope.$digest() is already occuring
     }
-
 
     function findSliderInterval(val) {
 
@@ -169,17 +170,21 @@
         var minTime = 300;
 
         var endTime = $scope.timeAmount;
-        var perecentMax = (endTime - minTime) / (maxTime - minTime) * 100;
+        var percentMax = (endTime - minTime) / (maxTime - minTime) * 100;
+
+        if (percentMax == 0){
+            percentMax = 25; //hack, find the maths for the real percent
+        }
 
         var currentTime,
             progressPercent;
 
-        console.log('perecentMax', perecentMax);
+        console.log('percentMax', percentMax);
 
         function timerRun() {
 
             currentTime = timer / 10;
-            progressPercent = (currentTime / endTime) * perecentMax;
+            progressPercent = (currentTime / endTime) * percentMax;
             console.log('progressPercent', progressPercent);
             $('.progress-bar-acne').css("width", progressPercent + "%").attr("aria-valuenow", progressPercent);
 
@@ -208,6 +213,11 @@
 
     var timeStarted = false;
 
+    // var today = new Date();
+    // console.log('today ', today )
+    // var testTime = new Date(new Date().getTime() + 10*10000)
+    // console.log('next time is: ', testTime )
+
     /*
         TODO:
         When the User clicks START TIME, set a local notification for that exact time
@@ -217,6 +227,10 @@
 
     var previousSeconds;
     $scope.isStarted = false;
+
+
+    timerFactory.cancelAllNotifications();
+
 
     function startCountdown() {
 
@@ -247,39 +261,18 @@
             } else {
                 seconds--;
             }
-
             countdownTimer = $timeout(startCountdown, 1000);
         }
     }
 
-    // var snd = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
-    // snd.play();
     /*
         ngclick events
     */
     $scope.startStopTimer = function () {
-
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
-            // snd.play();
-
-            // $cordovaMedia.play($scope.thisMedia);
-            //var angSound = $cordovaMedia.newMedia('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3');
-            //$cordovaMedia.play(angSound).then(
-            //    function (succ) {
-            //        console.log('yay! ' + succ);
-            //        $scope.soundDisabled = false;
-            //    },
-            //    function (err) {
-            //        console.log('boo! ' + err);
-            //        $scope.soundDisabled = false;
-            //    }
-            //)
-
-            //var my_media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', onSuccess, onError);
-            ////var media = new Media('http://www.stephaniequinn.com/Music/Commercial%20DEMO%20-%2013.mp3', null, null, mediaStatusCallback);
-            //$cordovaMedia.play(my_media);
+            startSound.play();
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
@@ -290,7 +283,6 @@
                 },
                 function () {
                     console.log("Timer rejected!", Date.now());
-
                 }
             );
 
