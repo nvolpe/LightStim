@@ -1,4 +1,4 @@
-﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate) {
+﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate, $ionicPlatform, $log) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -19,11 +19,33 @@
 
     //Nick V's Code
     //--------------------------------------------
-
     $scope.timeAmount = 300; // default the timer to 3 minutes
     $scope.timerRunning = false;
-    $scope.tester = 'test';
     $scope.alarmmMinutes = 5;
+    var onPauseTime;
+
+    $ionicPlatform.on('resume', function() {
+        // do something update your interval
+        $scope.timeAmount = '';
+        var resumeTime = new Date();
+        var differenceInSeconds = (onPauseTime - resumeTime)/1000;
+
+        var alertPopup = $ionicPopup.alert({
+             title: 'Diff in seconds'  + differenceInSeconds,
+             template: 'Difference in seconds: ' + differenceInSeconds
+        });
+
+        $log.log('Diff in seconds'  + differenceInSeconds);
+    }
+
+    $ionicPlatform.on('pause', function() {
+        // do something here to store the timestamp
+        // onPauseTime = $scope.timeAmount;
+        var time = new Date();
+        onPauseTime = time;
+
+        $log.log('Diff in seconds: ' + differenceInSeconds);
+    }
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
@@ -218,8 +240,6 @@
 
     var testTime = new Date(new Date().getTime() + 120000);
     console.log('next time is: ', testTime);
-
-
 
 
     /*

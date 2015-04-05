@@ -19,22 +19,12 @@ angular.module('starter')
         $cordovaLocalNotification.add({
             id: id,
             date: alarmTime,
-            message: "Version 5",
+            message: "Version 6",
             title: "LightStim",
             sound: 'file://mp3/beep.caf'
         }).then(function () {
             console.log("The notification was set");
         });
-
-        // $cordovaLocalNotification.add({
-        //     id: id,
-        //     date: alarmTime,
-        //     message: "Version 3",
-        //     title: "LightStim",
-        //     every: "minute"
-        // }).then(function () {
-        //     console.log("The notification was set");
-        // });
     };
 
     function _cancelNotification(id) {
