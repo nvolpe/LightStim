@@ -1,7 +1,7 @@
 ﻿lightStim.controller('acneMiniCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate, $ionicPlatform, $log, $ionicPopup) {
 
 
-    console.log('Init acne Mini ctrl!! ! ! ');
+    console.log('Init acne Mini ctrl!! ! ! plz work ');
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {
@@ -27,7 +27,24 @@
     $scope.alarmmMinutes = 5;
     var onPauseTime;
 
+    $ionicPlatform.on('resume', function() {
+        // do something update your interval
+        // var resumeTime = new Date();
+        // var differenceInSeconds = (onPauseTime - resumeTime)/1000;
+        // $log.log('Diff in seconds'  + differenceInSeconds);
 
+        console.log('Resumed yo yo yo!!');
+    });
+
+    $ionicPlatform.on('pause', function() {
+        // do something here to store the timestamp
+        // onPauseTime = $scope.timeAmount;
+        // var time = new Date();
+        // onPauseTime = time;
+        // $log.log('Diff in seconds: ' + differenceInSeconds);
+
+        console.log('Paused yo yo yo!!');
+    });
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
