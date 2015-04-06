@@ -19,38 +19,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'starter.controllers'])
             // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
-
-        document.addEventListener("pause", function (event) {
-            console.log('run() -> cordovaPauseEvent');
-        });
-
-        document.addEventListener("resume", function (event) {
-
-            var alertPopup = $ionicPopup.alert({
-                 title: 'Diff in seconds',
-                 template: 'Difference in seconds:'
-            });
-        });
-
     });
-
-    // $ionicPlatform.on('resume', function() {
-    //     // do something update your interval
-
-    //     var alertPopup = $ionicPopup.alert({
-    //          title: 'Diff in seconds',
-    //          template: 'Difference in seconds:'
-    //     });
-
-    //     $log.log('Diff in seconds');
-    // }
-
-    // $ionicPlatform.on('pause', function() {
-    //     // do something here to store the timestamp
-    //     // onPauseTime = $scope.timeAmount;
-
-    //     $log.log('Diff in seconds: ');
-    // }
 })
 
 

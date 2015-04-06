@@ -24,27 +24,24 @@
     $scope.alarmmMinutes = 5;
     var onPauseTime;
 
-    // $ionicPlatform.on('resume', function() {
-    //     // do something update your interval
-    //     var resumeTime = new Date();
-    //     var differenceInSeconds = (onPauseTime - resumeTime)/1000;
+    $ionicPlatform.on('resume', function() {
+        // do something update your interval
+        // var resumeTime = new Date();
+        // var differenceInSeconds = (onPauseTime - resumeTime)/1000;
+        // $log.log('Diff in seconds'  + differenceInSeconds);
 
-    //     var alertPopup = $ionicPopup.alert({
-    //          title: 'Diff in seconds'  + differenceInSeconds,
-    //          template: 'Difference in seconds: ' + differenceInSeconds
-    //     });
+        console.log('Resumed yo yo yo');
+    }
 
-    //     $log.log('Diff in seconds'  + differenceInSeconds);
-    // }
+    $ionicPlatform.on('pause', function() {
+        // do something here to store the timestamp
+        // onPauseTime = $scope.timeAmount;
+        // var time = new Date();
+        // onPauseTime = time;
+        // $log.log('Diff in seconds: ' + differenceInSeconds);
 
-    // $ionicPlatform.on('pause', function() {
-    //     // do something here to store the timestamp
-    //     // onPauseTime = $scope.timeAmount;
-    //     var time = new Date();
-    //     onPauseTime = time;
-
-    //     $log.log('Diff in seconds: ' + differenceInSeconds);
-    // }
+        console.log('Paused yo yo yo');
+    }
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
