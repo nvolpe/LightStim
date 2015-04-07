@@ -41,6 +41,8 @@
         //how do we solve that problem
 
         seconds = Math.Floor(seconds - differenceInSeconds);
+
+        console.log('Floored seconds: ' + seconds);
         console.log('timer should display : ', seconds);
     });
 
