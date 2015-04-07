@@ -29,20 +29,25 @@
 
     $ionicPlatform.on('resume', function() {
         // do something update your interval
-        // var resumeTime = new Date();
-        // var differenceInSeconds = (onPauseTime - resumeTime)/1000;
-        // $log.log('Diff in seconds'  + differenceInSeconds);
+         var resumeTime = new Date();
+         var differenceInSeconds = (onPauseTime - resumeTime)/1000;
+         console.log('Diff in seconds' + differenceInSeconds);
+
+        //have to do some weird maths here, find out what the user set the time to initially
+        //and if the user resumes past that mark, lets say they view it in 5 minutes but set the time originally at 3 minutes
+        //how do we solve that problem
 
         console.log('onPauseTime', onPauseTime);
         console.log('Acne Controller Resume!');
     });
 
     $ionicPlatform.on('pause', function() {
-        // do something here to store the timestamp
-        // onPauseTime = $scope.timeAmount;
-        // var time = new Date();
-        // onPauseTime = time;
-        // $log.log('Diff in seconds: ' + differenceInSeconds);
+         //do something here to store the timestamp
+        //onPauseTime = $scope.timeAmount;
+
+         var time = new Date();
+         onPauseTime = time;
+         //$log.log('Diff in seconds: ' + differenceInSeconds);
 
         onPauseTime = 5;
         console.log('Acne Controller Paused!');
