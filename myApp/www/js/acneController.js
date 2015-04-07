@@ -33,14 +33,14 @@
 
         var resumeTime = new Date().getTime();
         var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
-        console.log('Diff in seconds' + differenceInSeconds);
+        console.log('Diff in seconds ' + differenceInSeconds);
 
 
         //have to do some weird maths here, find out what the user set the time to initially
         //and if the user resumes past that mark, lets say they view it in 5 minutes but set the time originally at 3 minutes
         //how do we solve that problem
 
-        seconds = Math.Floor(seconds - differenceInSeconds);
+        seconds = Math.floor(seconds - differenceInSeconds);
 
         console.log('Floored seconds: ' + seconds);
         console.log('timer should display : ', seconds);
