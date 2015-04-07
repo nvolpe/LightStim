@@ -40,10 +40,8 @@
         //and if the user resumes past that mark, lets say they view it in 5 minutes but set the time originally at 3 minutes
         //how do we solve that problem
 
-
-        seconds = seconds - differenceInSeconds;
+        seconds = Math.Floor(seconds - differenceInSeconds);
         console.log('timer should display : ', seconds);
-
     });
 
     $ionicPlatform.on('pause', function () {
