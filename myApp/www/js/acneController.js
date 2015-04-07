@@ -33,7 +33,8 @@
         // var differenceInSeconds = (onPauseTime - resumeTime)/1000;
         // $log.log('Diff in seconds'  + differenceInSeconds);
 
-        console.log('Resumed yo yo yo!!');
+        console.log('onPauseTime', onPauseTime);
+        console.log('Acne Controller Resume!');
     });
 
     $ionicPlatform.on('pause', function() {
@@ -43,7 +44,8 @@
         // onPauseTime = time;
         // $log.log('Diff in seconds: ' + differenceInSeconds);
 
-        console.log('Paused yo yo yo!!');
+        onPauseTime = 5;
+        console.log('Acne Controller Paused!');
     });
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
