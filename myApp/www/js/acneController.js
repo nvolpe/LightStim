@@ -27,29 +27,34 @@
     $scope.alarmmMinutes = 5;
     var onPauseTime;
 
-    $ionicPlatform.on('resume', function() {
-        // do something update your interval
-         var resumeTime = new Date();
-         var differenceInSeconds = (onPauseTime - resumeTime)/1000;
-         console.log('Diff in seconds' + differenceInSeconds);
+    $ionicPlatform.on('resume', function () {
+        // do something to update timer
+        console.log('Acne Controller Resume!');
+
+        var resumeTime = new Date().getTime();
+        var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
+        console.log('Diff in seconds' + differenceInSeconds);
+
 
         //have to do some weird maths here, find out what the user set the time to initially
         //and if the user resumes past that mark, lets say they view it in 5 minutes but set the time originally at 3 minutes
         //how do we solve that problem
 
-        console.log('onPauseTime', onPauseTime);
-        console.log('Acne Controller Resume!');
+
+        seconds = seconds - differenceInSeconds;
+        console.log('timer should display : ', seconds);
+
     });
 
-    $ionicPlatform.on('pause', function() {
-         //do something here to store the timestamp
+    $ionicPlatform.on('pause', function () {
+        //do something here to store the timestamp
         //onPauseTime = $scope.timeAmount;
 
-         var time = new Date();
-         onPauseTime = time;
-         //$log.log('Diff in seconds: ' + differenceInSeconds);
+        var time = new Date().getTime();
+        onPauseTime = time;
+        //$log.log('Diff in seconds: ' + differenceInSeconds);
 
-        onPauseTime = 5;
+        //onPauseTime = 5;
         console.log('Acne Controller Paused!');
     });
 
@@ -200,7 +205,7 @@
         var endTime = $scope.timeAmount;
         var percentMax = (endTime - minTime) / (maxTime - minTime) * 100;
 
-        if (percentMax == 0){
+        if (percentMax == 0) {
             percentMax = 25; //hack, find the maths for the real percent
         }
 
@@ -242,7 +247,7 @@
     var timeStarted = false;
 
     var today = new Date();
-    console.log('today ', today );
+    console.log('today ', today);
 
     var testTime = new Date(new Date().getTime() + 120000);
     console.log('next time is: ', testTime);
@@ -257,6 +262,7 @@
 
     var previousSeconds;
     $scope.isStarted = false;
+    var seconds;
 
 
     // timerFactory.cancelAllNotifications();
