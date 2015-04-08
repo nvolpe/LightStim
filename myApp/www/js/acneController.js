@@ -36,7 +36,7 @@
         var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
         console.log('Diff in seconds ' + differenceInSeconds);
 
-        var totalSeconds = seconds + differenceInSeconds;
+        var totalSeconds = Math.floor(seconds + differenceInSeconds);
 
         //need how much they progressed
         //need to know what it was originally set at
@@ -47,13 +47,10 @@
         
         if (totalSeconds > 300) {
             newSeconds = totalSeconds % 300;
-            seconds = 300 - newSeconds;
-
-            //seconds = 300 - newSeconds;
+            seconds = Math.floor(300 - newSeconds);
         } else {
             seconds = Math.floor(seconds - differenceInSeconds);
         }
-
 
         console.log('Floored seconds: ' + seconds);
         console.log('timer should display : ', seconds);
