@@ -29,7 +29,7 @@
 
     $ionicPlatform.on('resume', function () {
         // do something to update timer
-        console.log('Acne Controller Resume!');
+        console.log('Acne Controller Resumed forizzle');
 
         var newSeconds;
         var resumeTime = new Date().getTime();
@@ -46,7 +46,10 @@
         //timer should be set to 2:40
         
         if (totalSeconds > 300) {
-            seconds = totalSeconds % 300;
+            newSeconds = totalSeconds % 300;
+            seconds = 300 - newSeconds;
+
+            //seconds = 300 - newSeconds;
         } else {
             seconds = Math.floor(seconds - differenceInSeconds);
         }
@@ -65,7 +68,7 @@
         //$log.log('Diff in seconds: ' + differenceInSeconds);
 
         //onPauseTime = 5;
-        console.log('Acne Controller Paused!');
+        console.log('Acne Controller Paused forizzle!');
     });
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
