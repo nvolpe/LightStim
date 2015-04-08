@@ -41,9 +41,17 @@
         //need how much they progressed
         //need to know what it was originally set at
 
-        //time set to 3 minutes
-        //user returns to app 3:20 seconds later == 200 seconds
-        //timer should be set to 2:40
+        //lets say:
+        //clock says 4 mintues when they leave: 240 seconds
+        //then they re enter 7 minutes later: 420 seconds
+        //total seconds: 660
+        //timer should be counting down from 2 minutes: 120 seconds
+
+        //lets say:
+        //clock says 3 mintues when they leave: 180 seconds
+        //then they re enter 6 minutes later: 360 seconds
+        //total seconds: 540
+        //timer should be counting down from 1 minutes: 0 seconds
         
         if (totalSeconds > 300) {
             newSeconds = totalSeconds % 300;
@@ -51,6 +59,8 @@
         } else {
             seconds = Math.floor(seconds - differenceInSeconds);
         }
+
+        //seconds = Math.floor(seconds - differenceInSeconds);
 
         console.log('Floored seconds: ' + seconds);
         console.log('timer should display : ', seconds);
@@ -308,8 +318,8 @@
                 if (repeat >= 5) {
                     $timeout.cancel(countdownTimer);
                     $scope.isStarted = false;
+                    return;
                 }
-                return;
             } else {
                 seconds--;
             }
