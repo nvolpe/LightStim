@@ -31,16 +31,26 @@
         // do something to update timer
         console.log('Acne Controller Resume!');
 
+        var newSeconds;
         var resumeTime = new Date().getTime();
         var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
         console.log('Diff in seconds ' + differenceInSeconds);
 
+        var totalSeconds = seconds + differenceInSeconds;
 
-        //have to do some weird maths here, find out what the user set the time to initially
-        //and if the user resumes past that mark, lets say they view it in 5 minutes but set the time originally at 3 minutes
-        //how do we solve that problem
+        //need how much they progressed
+        //need to know what it was originally set at
 
-        seconds = Math.floor(seconds - differenceInSeconds);
+        //time set to 3 minutes
+        //user returns to app 3:20 seconds later == 200 seconds
+        //timer should be set to 2:40
+        
+        if (totalSeconds > 300) {
+            seconds = totalSeconds % 300;
+        } else {
+            seconds = Math.floor(seconds - differenceInSeconds);
+        }
+
 
         console.log('Floored seconds: ' + seconds);
         console.log('timer should display : ', seconds);
@@ -263,10 +273,9 @@
     var previousSeconds;
     $scope.isStarted = false;
     var seconds;
-
+    var repeat = 0;
 
     // timerFactory.cancelAllNotifications();
-
 
     function startCountdown() {
 
@@ -291,8 +300,15 @@
             $scope.seconds = remainingSeconds;
 
             if (seconds == 0) {
-                $timeout.cancel(countdownTimer);
-                $scope.isStarted = false;
+
+                seconds = $scope.timeAmount;
+                repeat++;
+
+                //stop repeating
+                if (repeat >= 5) {
+                    $timeout.cancel(countdownTimer);
+                    $scope.isStarted = false;
+                }
                 return;
             } else {
                 seconds--;
