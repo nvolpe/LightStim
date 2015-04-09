@@ -27,6 +27,12 @@
     $scope.alarmmMinutes = 5;
     var onPauseTime;
 
+    $scope.$on('$locationChangeStart', function (event) {
+        hackyInitThings();
+    });
+
+   
+
     $ionicPlatform.on('resume', function () {
         // do something to update timer
         console.log('Acne Controller Resumed forizzle');
@@ -85,6 +91,12 @@
     });
 
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
+
+    function hackyInitThings() {
+        //remove other controller's classes
+        $('.col').removeClass('selectedTime-wrinkle');
+        console.log('hacky init things');
+    }
 
     var id;
     function formatSeconds(isReset) {
@@ -157,6 +169,7 @@
     }
 
 
+    hackyInitThings();
     formatSeconds();
     createId();
     $ionicSideMenuDelegate.canDragContent(true);
@@ -166,7 +179,7 @@
     */
 
     //bug: find better place for this. slider handle doesnt change color on page change
-    //$('.rangeslider__handle').addClass('acne-slider-handle');
+    $('.rangeslider__handle').addClass('acne-slider-handle');
 
     //Initiate Range Slider
     var isStart = false;

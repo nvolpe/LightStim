@@ -30,6 +30,19 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
     $scope.alarmmMinutes = 3;
     $scope.selectedTime = { "color": "red" };
 
+
+    $scope.$on('$locationChangeStart', function (event) {
+        hackyInitThings();
+    });
+
+
+    function hackyInitThings() {
+        //remove other controller's classes
+        $('.col').removeClass('selectedTime-acne');
+        console.log('hacky init things');
+    }
+
+
     var id;
     function formatSeconds(isReset) {
 
@@ -104,7 +117,7 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
         id = Math.floor(Math.random() * (10000));
     }
 
-
+    hackyInitThings();
     formatSeconds();
     createId();
     $ionicSideMenuDelegate.canDragContent(true);
