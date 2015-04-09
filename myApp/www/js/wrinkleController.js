@@ -1,7 +1,7 @@
 ﻿//==============================
 // Wrinkle Controller
 //==============================
-lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate) {
+lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, $timeout, timerFactory, $ionicSideMenuDelegate, $ionicPlatform) {
 
     // Create the Concierge_Acne_Mini modal that we will use later
     $ionicModal.fromTemplateUrl('templates/concierge_wrinkles.html', {

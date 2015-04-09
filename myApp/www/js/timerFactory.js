@@ -119,6 +119,8 @@ angular.module('starter')
             });
         });
 
+        ids = [];
+
         //checkIfScheduled(id);
     };
 
