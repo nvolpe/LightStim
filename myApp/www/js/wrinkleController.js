@@ -113,6 +113,9 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
         BUG: Jquery is breaking the diretives! This shouldnt be written in JQuery anyways!!!
     */
 
+    //bug: find better place for this. slider handle doesnt change color on page change
+    $('.rangeslider__handle').addClass('wrinkle-slider-handle');
+
     //Initiate Range Slider
     var isStart = false;
     $('input[type="range"]').rangeslider({

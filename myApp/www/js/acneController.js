@@ -22,7 +22,7 @@
 
     //Nick V's Code
     //--------------------------------------------
-    $scope.timeAmount = 300; // default the timer to 3 minutes
+    $scope.timeAmountAcne = 300; // default the timer to 3 minutes
     $scope.timerRunning = false;
     $scope.alarmmMinutes = 5;
     var onPauseTime;
@@ -52,6 +52,12 @@
         //then they re enter 6 minutes later: 360 seconds
         //total seconds: 540
         //timer should be counting down from 1 minutes: 0 seconds
+
+        //lets say:
+        //clock says 4 mintues when they leave: 240 seconds
+        //then they re enter 6 minutes later: 360 seconds
+        //total seconds: 600
+        //timer should be counting down from 1 minutes: 0 seconds
         
         if (totalSeconds > 300) {
             newSeconds = totalSeconds % 300;
@@ -68,7 +74,7 @@
 
     $ionicPlatform.on('pause', function () {
         //do something here to store the timestamp
-        //onPauseTime = $scope.timeAmount;
+        //onPauseTime = $scope.timeAmountAcne;
 
         var time = new Date().getTime();
         onPauseTime = time;
@@ -84,11 +90,11 @@
     function formatSeconds(isReset) {
 
         //if (isReset) {
-        //    $scope.timeAmount = 180;
+        //    $scope.timeAmountAcne = 180;
         //} 
 
-        var minutes = Math.round(($scope.timeAmount - 30) / 60);
-        var remainingSeconds = $scope.timeAmount % 60;
+        var minutes = Math.round(($scope.timeAmountAcne - 30) / 60);
+        var remainingSeconds = $scope.timeAmountAcne % 60;
         if (remainingSeconds < 10) {
             remainingSeconds = "0" + remainingSeconds;
         }
@@ -125,7 +131,7 @@
         $('.col').removeClass('selectedTime-acne');
         $('#time-row :nth-child(' + position + ')').addClass('selectedTime-acne');
 
-        $scope.timeAmount = seconds;
+        $scope.timeAmountAcne = seconds;
         formatSeconds();
         $scope.alarmmMinutes = minutes;
     }
@@ -133,7 +139,7 @@
     function resetTimer(time) {
 
         if (time) {
-            $scope.timeAmount = time;
+            $scope.timeAmountAcne = time;
         }
 
         if ($scope.isStarted) {
@@ -141,8 +147,8 @@
             $scope.timerRunning = false;
             stopProgressBar();
             $timeout.cancel(countdownTimer);
-            //timerFactory.cancelNotification(id);
-            console.log('cancellllllllled');
+            timerFactory.cancelNotification(id);
+            console.log('The timer was canceled and so was the notificaion');
         }
     }
 
@@ -158,6 +164,9 @@
     /*
         BUG: Jquery is breaking the diretives! This shouldnt be written in JQuery anyways!!!
     */
+
+    //bug: find better place for this. slider handle doesnt change color on page change
+    //$('.rangeslider__handle').addClass('acne-slider-handle');
 
     //Initiate Range Slider
     var isStart = false;
@@ -222,11 +231,11 @@
         var maxTime = 900;
         var minTime = 300;
 
-        var endTime = $scope.timeAmount;
+        var endTime = $scope.timeAmountAcne;
         var percentMax = (endTime - minTime) / (maxTime - minTime) * 100;
 
         if (percentMax == 0) {
-            percentMax = 25; //hack, find the maths for the real percent
+            percentMax = 16.5; //hack, find the maths for the real percent
         }
 
         var currentTime,
@@ -272,7 +281,6 @@
     var testTime = new Date(new Date().getTime() + 120000);
     console.log('next time is: ', testTime);
 
-
     /*
         TODO:
         When the User clicks START TIME, set a local notification for that exact time
@@ -290,11 +298,11 @@
     function startCountdown() {
 
         if (!$scope.isStarted) {
-            seconds = $scope.timeAmount;
+            seconds = $scope.timeAmountAcne;
             $scope.isStarted = true;
         }
 
-        //var seconds = $scope.timeAmount;
+        //var seconds = $scope.timeAmountAcne;
         if ($scope.isStarted == true) {
 
             minutes = Math.round((seconds - 30) / 60);
@@ -311,7 +319,7 @@
 
             if (seconds == 0) {
 
-                seconds = $scope.timeAmount;
+                seconds = $scope.timeAmountAcne;
                 repeat++;
 
                 //stop repeating
@@ -362,7 +370,7 @@
             $scope.isStarted = false;
             formatSeconds(true);
             //cancels local notification
-            timerFactory.cancelNotification(id);
+            //timerFactory.cancelNotification(id);
         }
     };
 })

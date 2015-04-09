@@ -8,18 +8,18 @@ angular.module('starter')
 
     //TODO: create id rather than pass it in
     function _setNotification(id, timeAmount) {
-        var alarmTime = new Date();
-        // alarmTime.setMinutes(alarmTime.getMinutes() + timeAmount);
+        var alarmTime = new Date();;
+         alarmTime.setMinutes(alarmTime.getMinutes() + timeAmount);
 
         //for development
-        alarmTime.setMinutes(alarmTime.getMinutes() + 1);
+        //alarmTime.setMinutes(alarmTime.getMinutes() + 1);
 
         console.log('set notification');
 
         $cordovaLocalNotification.add({
             id: id,
             date: alarmTime,
-            message: "Version 6",
+            message: "Timer has reached interval",
             title: "LightStim",
             sound: 'file://mp3/beep.caf'
         }).then(function () {
