@@ -26,6 +26,7 @@
     $scope.timerRunning = false;
     $scope.alarmmMinutes = 5;
     var onPauseTime;
+    var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
     $scope.$on('$locationChangeSuccess', function (event) {
         console.log('$locationChangeSuccess acne');
@@ -96,7 +97,7 @@
         console.log('Acne Controller Paused forizzle!');
     });
 
-    var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
+   
 
     function hackyInitThings() {
         //remove other controller's classes

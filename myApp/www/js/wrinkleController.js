@@ -26,9 +26,9 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
 
     $scope.timeAmount = 180; // default the timer to 3 minutes
     $scope.timerRunning = false;
-    $scope.tester = 'test';
     $scope.alarmmMinutes = 3;
-    $scope.selectedTime = { "color": "red" };
+    var onPauseTime;
+    var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
     $scope.$on('$locationChangeSuccess', function (event) {
         console.log('$locationChangeSuccess wrinkle');
@@ -36,6 +36,67 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
         $('.rangeslider__handle').addClass('acne-slider-handle');
 
         $('.col').removeClass('selectedTime-wrinkle');
+    });
+
+
+    $ionicPlatform.on('resume', function () {
+        // do something to update timer
+        console.log('Acne Controller Resumed forizzle');
+
+        var newSeconds;
+        var resumeTime = new Date().getTime();
+        var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
+        console.log('Diff in seconds ' + differenceInSeconds);
+
+        var totalSeconds = Math.floor(seconds + differenceInSeconds);
+
+        //need how much they progressed
+        //need to know what it was originally set at
+
+        //lets say:
+        //clock says 4 mintues when they leave: 240 seconds
+        //then they re enter 7 minutes later: 420 seconds
+        //total seconds: 660
+        //timer should be counting down from 2 minutes: 120 seconds
+
+        //lets say:
+        //clock says 3 mintues when they leave: 180 seconds
+        //then they re enter 6 minutes later: 360 seconds
+        //total seconds: 540
+        //timer should be counting down from 1 minutes: 0 seconds
+
+        //lets say:
+        //clock says 4 mintues when they leave: 240 seconds
+        //then they re enter 6 minutes later: 360 seconds
+        //total seconds: 600
+        //timer should be counting down from 1 minutes: 0 seconds
+
+        //if (totalSeconds > 300) {
+        //    newSeconds = totalSeconds % 300;
+        //    seconds = Math.floor(300 - newSeconds);
+        //} else {
+        //    seconds = Math.floor(seconds - differenceInSeconds);
+        //}
+
+
+        seconds = Math.floor(seconds - differenceInSeconds);
+
+        //seconds = Math.floor(seconds - differenceInSeconds);
+
+        console.log('Floored seconds: ' + seconds);
+        console.log('timer should display : ', seconds);
+    });
+
+    $ionicPlatform.on('pause', function () {
+        //do something here to store the timestamp
+        //onPauseTime = $scope.timeAmountAcne;
+
+        var time = new Date().getTime();
+        onPauseTime = time;
+        //$log.log('Diff in seconds: ' + differenceInSeconds);
+
+        //onPauseTime = 5;
+        console.log('Acne Controller Paused forizzle!');
     });
 
     function hackyInitThings() {
@@ -243,6 +304,8 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
 
     var minutes;
     var countdownTimer;
+    var seconds;
+    var repeat = 0;
 
     var previousSeconds;
     $scope.isStarted = false;
@@ -270,14 +333,21 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
             $scope.minutes = minutes;
             $scope.seconds = remainingSeconds;
 
+
             if (seconds == 0) {
-                $timeout.cancel(countdownTimer);
-                $scope.isStarted = false;
-                return;
+
+                seconds = $scope.timeAmountAcne;
+                repeat++;
+
+                //stop repeating
+                if (repeat >= 5) {
+                    $timeout.cancel(countdownTimer);
+                    $scope.isStarted = false;
+                    return;
+                }
             } else {
                 seconds--;
             }
-
 
             countdownTimer = $timeout(startCountdown, 1000);
         }
@@ -291,6 +361,7 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
+            startSound.play();
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
