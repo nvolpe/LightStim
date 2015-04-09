@@ -30,18 +30,21 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
     $scope.alarmmMinutes = 3;
     $scope.selectedTime = { "color": "red" };
 
+    $scope.$on('$locationChangeSuccess', function (event) {
+        console.log('$locationChangeSuccess wrinkle');
+        $('.rangeslider__handle').removeClass('wrinkle-slider-handle');
+        $('.rangeslider__handle').addClass('acne-slider-handle');
 
-    $scope.$on('$locationChangeStart', function (event) {
-        hackyInitThings();
+        $('.col').removeClass('selectedTime-wrinkle');
     });
-
 
     function hackyInitThings() {
         //remove other controller's classes
         $('.col').removeClass('selectedTime-acne');
+        $('.rangeslider__handle').removeClass('acne-slider-handle');
+        $('.rangeslider__handle').addClass('wrinkle-slider-handle');
         console.log('hacky init things');
     }
-
 
     var id;
     function formatSeconds(isReset) {
@@ -126,8 +129,6 @@ lightStim.controller('wrinklesCtrl', function ($scope, $rootScope, $ionicModal, 
         BUG: Jquery is breaking the diretives! This shouldnt be written in JQuery anyways!!!
     */
 
-    //bug: find better place for this. slider handle doesnt change color on page change
-    $('.rangeslider__handle').addClass('wrinkle-slider-handle');
 
     //Initiate Range Slider
     var isStart = false;

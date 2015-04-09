@@ -27,11 +27,14 @@
     $scope.alarmmMinutes = 5;
     var onPauseTime;
 
-    $scope.$on('$locationChangeStart', function (event) {
-        hackyInitThings();
+    $scope.$on('$locationChangeSuccess', function (event) {
+        console.log('$locationChangeSuccess acne');
+        $('.rangeslider__handle').removeClass('acne-slider-handle');
+        $('.rangeslider__handle').addClass('wrinkle-slider-handle');
+
+        $('.col').removeClass('selectedTime-acne');
     });
 
-   
 
     $ionicPlatform.on('resume', function () {
         // do something to update timer
@@ -95,6 +98,8 @@
     function hackyInitThings() {
         //remove other controller's classes
         $('.col').removeClass('selectedTime-wrinkle');
+        $('.rangeslider__handle').removeClass('wrinkle-slider-handle');
+        $('.rangeslider__handle').addClass('acne-slider-handle');
         console.log('hacky init things');
     }
 
@@ -177,9 +182,6 @@
     /*
         BUG: Jquery is breaking the diretives! This shouldnt be written in JQuery anyways!!!
     */
-
-    //bug: find better place for this. slider handle doesnt change color on page change
-    $('.rangeslider__handle').addClass('acne-slider-handle');
 
     //Initiate Range Slider
     var isStart = false;
@@ -351,7 +353,10 @@
     /*
         ngclick events
     */
+
+
     $scope.startStopTimer = function () {
+
         if (!$scope.timerRunning) {
 
             countdownTimer = $timeout(startCountdown, 1000);
