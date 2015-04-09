@@ -21,28 +21,47 @@ angular.module('starter')
         //for development
         //alarmTime.setMinutes(alarmTime.getMinutes() + 1);
 
-         angular.forEach(ids, function (id) {
 
-             console.log('set notification');
+        alarmTime = new Date();;
+        alarmTime.setMinutes(alarmTime.getMinutes() + timeAmount);
 
-             alarmTime = new Date();;
-             alarmTime.setMinutes(alarmTime.getMinutes() + additionalTime);
+        console.log('Time was set for : ' + alarmTime);
+        console.log('addtional time is : ' + additionalTime);
 
-             console.log('Time was set for : ' + alarmTime);
-             console.log('addtional time is : ' + additionalTime);
+        $cordovaLocalNotification.add({
+            id: ids[0],
+            date: alarmTime,
+            message: "Timer has reached interval",
+            title: "LightStim",
+            sound: 'file://mp3/beep.caf'
+        }).then(function () {
+            console.log("The notification was set");
+        });
 
-             $cordovaLocalNotification.add({
-                 id: id,
-                 date: alarmTime,
-                 message: "Timer has reached interval",
-                 title: "LightStim",
-                 sound: 'file://mp3/beep.caf'
-             }).then(function () {
-                 console.log("The notification was set");
-             });
 
-             additionalTime = additionalTime + timeAmount;
-         });
+
+         //angular.forEach(ids, function (id) {
+
+         //    console.log('set notification');
+
+         //    alarmTime = new Date();;
+         //    alarmTime.setMinutes(alarmTime.getMinutes() + additionalTime);
+
+         //    console.log('Time was set for : ' + alarmTime);
+         //    console.log('addtional time is : ' + additionalTime);
+
+         //    $cordovaLocalNotification.add({
+         //        id: id,
+         //        date: alarmTime,
+         //        message: "Timer has reached interval",
+         //        title: "LightStim",
+         //        sound: 'file://mp3/beep.caf'
+         //    }).then(function () {
+         //        console.log("The notification was set");
+         //    });
+
+         //    additionalTime = additionalTime + timeAmount;
+         //});
     };
 
     function _cancelNotification(unimplented) {
