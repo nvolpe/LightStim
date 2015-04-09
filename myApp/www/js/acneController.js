@@ -68,12 +68,15 @@
         //total seconds: 600
         //timer should be counting down from 1 minutes: 0 seconds
         
-        if (totalSeconds > 300) {
-            newSeconds = totalSeconds % 300;
-            seconds = Math.floor(300 - newSeconds);
-        } else {
-            seconds = Math.floor(seconds - differenceInSeconds);
-        }
+        //if (totalSeconds > 300) {
+        //    newSeconds = totalSeconds % 300;
+        //    seconds = Math.floor(300 - newSeconds);
+        //} else {
+        //    seconds = Math.floor(seconds - differenceInSeconds);
+        //}
+
+
+        seconds = Math.floor(seconds - differenceInSeconds);
 
         //seconds = Math.floor(seconds - differenceInSeconds);
 

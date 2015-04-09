@@ -28,6 +28,9 @@ angular.module('starter')
              alarmTime = new Date();;
              alarmTime.setMinutes(alarmTime.getMinutes() + additionalTime);
 
+             console.log('Time was set for : ' + alarmTime);
+             console.log('addtional time is : ' + additionalTime);
+
              $cordovaLocalNotification.add({
                  id: id,
                  date: alarmTime,
