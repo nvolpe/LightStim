@@ -85,7 +85,7 @@ angular.module('starter')
             message: "Timer has reached interval 10",
             title: "LightStim",
             sound: 'file://mp3/beep.caf'
-        },
+        }]);
 
 
          //angular.forEach(ids, function (id) {
