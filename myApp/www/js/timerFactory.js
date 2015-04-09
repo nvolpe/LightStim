@@ -14,7 +14,7 @@ angular.module('starter')
     function _setNotification(unimplented, timeAmount) {
 
         createIds();
-        createTimes();
+        createTimes(timeAmount);
 
         $cordovaLocalNotification.add([{
             id: ids[0],
