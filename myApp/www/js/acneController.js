@@ -26,6 +26,9 @@
     $scope.timerRunning = false;
     $scope.alarmmMinutes = 5;
     var onPauseTime;
+    var startTime;
+    var totalElapsedTime = 0;
+
     var startSound = new Audio('mp3/timer_start.mp3'); // buffers automatically when created
 
     $scope.$on('$locationChangeSuccess', function (event) {
@@ -39,50 +42,25 @@
 
     $ionicPlatform.on('resume', function () {
         // do something to update timer
-        console.log('Acne Controller Resumed forizzle');
+        if ($scope.isStarted) {
 
-        var newSeconds;
-        var resumeTime = new Date().getTime();
-        var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
-        console.log('Diff in seconds ' + differenceInSeconds);
+            console.log('Acne Controller Resumed forizzle');
 
-        var totalSeconds = Math.floor(seconds + differenceInSeconds);
+            var newSeconds;
+            var resumeTime = new Date().getTime();
+            var differenceInSeconds = (resumeTime - onPauseTime) / 1000;
+            console.log('Diff in seconds ' + differenceInSeconds);
 
-        //need how much they progressed
-        //need to know what it was originally set at
+            var totalSeconds = Math.floor(seconds + differenceInSeconds);
 
-        //lets say:
-        //clock says 4 mintues when they leave: 240 seconds
-        //then they re enter 7 minutes later: 420 seconds
-        //total seconds: 660
-        //timer should be counting down from 2 minutes: 120 seconds
+            totalElapsedTime = Math.floor(totalElapsedTime + differenceInSeconds);
 
-        //lets say:
-        //clock says 3 mintues when they leave: 180 seconds
-        //then they re enter 6 minutes later: 360 seconds
-        //total seconds: 540
-        //timer should be counting down from 1 minutes: 0 seconds
-
-        //lets say:
-        //clock says 4 mintues when they leave: 240 seconds
-        //then they re enter 6 minutes later: 360 seconds
-        //total seconds: 600
-        //timer should be counting down from 1 minutes: 0 seconds
-        
-        //if (totalSeconds > 300) {
-        //    newSeconds = totalSeconds % 300;
-        //    seconds = Math.floor(300 - newSeconds);
-        //} else {
-        //    seconds = Math.floor(seconds - differenceInSeconds);
-        //}
+            seconds = $scope.timeAmountAcne - (TotalElapsedTime % $scope.timeAmountAcne)
 
 
-        seconds = Math.floor(seconds - differenceInSeconds);
+        }
 
-        //seconds = Math.floor(seconds - differenceInSeconds);
-
-        console.log('Floored seconds: ' + seconds);
-        console.log('timer should display : ', seconds);
+       
     });
 
     $ionicPlatform.on('pause', function () {
@@ -273,6 +251,7 @@
                 return;
             }
             timer++;
+            totalElapsedTime++;
             progressTimer = setTimeout(function () { timerRun() }, 100);
         }
         timerRun();
@@ -358,13 +337,16 @@
         ngclick events
     */
 
-
     $scope.startStopTimer = function () {
 
         if (!$scope.timerRunning) {
 
+            totalElapsedTime = 0;
             countdownTimer = $timeout(startCountdown, 1000);
             startSound.play();
+
+
+            startTime = new Date().getTime();
 
             // Let's bind to the resolve/reject handlers of
             // the timer promise so that we can make sure our
@@ -391,6 +373,7 @@
             resetTimer();
             $scope.isStarted = false;
             formatSeconds(true);
+            totalElapsedTime = 0;
             //cancels local notification
             //timerFactory.cancelNotification(id);
         }
